@@ -3,10 +3,11 @@ require 'httparty'
 require 'json'
 
 SOURCE_GITLAB_TOKEN = 'glpat-ZM2_ebB6SBx4yNi-Pznw'
-DESTINATION_GITLAB_TOKEN = 'glpat-ZM2_ebB6SBx4yNi-Pznw'
+DESTINATION_GITLAB_TOKEN = 'glpat-hzNzXWn85GgtFvcJRAEi'
 SOURCE_PROJECT_ID = '56077888'
-DESTINATION_PROJECT_ID = '56114870'
-GITLAB_API_ENDPOINT = 'https://gitlab.com/api/v4'
+DESTINATION_PROJECT_ID = '4080'
+SOURCE_GITLAB_API_ENDPOINT = 'https://gitlab.com/api/v4'
+DESTINATION_GITLAB_API_ENDPOINT = 'https://gitlab.totvs.amplis.com.br/api/v4'
 
 def handle_response(response, source_project_id)
   unless response.code.between?(200, 299)
@@ -21,26 +22,26 @@ rescue JSON::ParserError => e
 end
 
 def fetch_issues(source_project_id, token)
-  response = HTTParty.get("#{GITLAB_API_ENDPOINT}/projects/#{source_project_id}/issues",
+  response = HTTParty.get("#{SOURCE_GITLAB_API_ENDPOINT}/projects/#{source_project_id}/issues",
                           headers: { "PRIVATE-TOKEN" => token })
   handle_response(response, source_project_id)
 end
 
 def fetch_milestones(source_project_id, token)
-  response = HTTParty.get("#{GITLAB_API_ENDPOINT}/projects/#{source_project_id}/milestones",
+  response = HTTParty.get("#{SOURCE_GITLAB_API_ENDPOINT}/projects/#{source_project_id}/milestones",
                           headers: { "PRIVATE-TOKEN" => token })
   handle_response(response, source_project_id)
 end
 
 def create_milestone(destination_project_id, token, milestone)
-  response = HTTParty.post("#{GITLAB_API_ENDPOINT}/projects/#{destination_project_id}/milestones",
+  response = HTTParty.post("#{DESTINATION_GITLAB_API_ENDPOINT}/projects/#{destination_project_id}/milestones",
                 headers: { "Content-Type" => "application/json", "PRIVATE-TOKEN" => token },
                 body: milestone.to_json)
   handle_response(response, destination_project_id)
 end
 
 def create_issue(destination_project_id, token, issue)
-  response = HTTParty.post("#{GITLAB_API_ENDPOINT}/projects/#{destination_project_id}/issues",
+  response = HTTParty.post("#{DESTINATION_GITLAB_API_ENDPOINT}/projects/#{destination_project_id}/issues",
                 headers: { "Content-Type" => "application/json", "PRIVATE-TOKEN" => token },
                 body: issue.to_json)
   handle_response(response, destination_project_id)

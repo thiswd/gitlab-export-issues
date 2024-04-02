@@ -27,7 +27,13 @@ module GitLabAPI
 
     def handle_response(response)
       unless response.code.between?(200, 299)
-        raise StandardError, "API Error: #{response.code} - #{response.message}"
+        error_message = "API Error: #{response.code} - #{response.message}"
+        if response.parsed_response.is_a?(Hash) && response.parsed_response['error']
+          error_message += " - Detail: #{response.parsed_response['error']}"
+        elsif response.parsed_response.is_a?(Hash) && response.parsed_response['message']
+          error_message += " - Detail: #{response.parsed_response['message']}"
+        end
+        raise StandardError, error_message
       end
       JSON.parse(response.body)
     rescue JSON::ParserError => e

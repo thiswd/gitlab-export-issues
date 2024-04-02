@@ -3,7 +3,7 @@
 require_relative '../lib/migration_manager'
 
 unless ARGV.length == 2
-  puts "Usage: #{__FILE__} SOURCE_PROJECT_ID DESTINATION_PROJECT_ID"
+  puts "Usage: ruby #{__FILE__} SOURCE_PROJECT_ID DESTINATION_PROJECT_ID"
   exit(1)
 end
 

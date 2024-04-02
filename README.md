@@ -17,7 +17,7 @@ This Ruby script facilitates the migration of issues, milestones, and comments f
 
 ## Configuration
 
-Before running the script, you need to set up a few variables within the script:
+Before running the script, you need to set up a few variables within `config/settings.rb` file:
 
 - `SOURCE_GITLAB_TOKEN`: Your Personal Access Token for the source GitLab instance.
 - `DESTINATION_GITLAB_TOKEN`: Your Personal Access Token for the destination GitLab instance.
@@ -31,7 +31,7 @@ Additionally, the source and destination project IDs need to be passed as argume
 2. Save the script, and then run it from the terminal or command prompt as follows:
 
 ```sh
-ruby import.rb SOURCE_PROJECT_ID DESTINATION_PROJECT_ID
+ruby bin/execute.rb SOURCE_PROJECT_ID DESTINATION_PROJECT_ID
 ```
 
 Replace `SOURCE_PROJECT_ID` and `DESTINATION_PROJECT_ID` with the actual project IDs for your source and destination projects.
